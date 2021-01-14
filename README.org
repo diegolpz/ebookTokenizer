@@ -1,0 +1,11 @@
+#+TITLE: Readme
+
+* Description
+Generate from a text files  the same text with hiperlinks to dictionaries and translators.
+Use to generate anki decks for practicing Chinese or Russian.
+
+* Usage
+Just run the script with input the TXT file. Use the commans 'sed 's/^[^[:print:]]$/<br>/' textIN.txt > textOUT.txt' if you want to used in browser.
+
+* Further work
+Use CMUSphinx to tokenize audiobooks and generate the anki cards automatically.

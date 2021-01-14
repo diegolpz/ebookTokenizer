@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+#
+# The first and only parameter of this script must be the file with
+# the list of words to translate
+
+rm timurTXT.txt
+
+# To clean up the input file , no undesired space, the last s/$// deletes the carriage return generated on windows systems
+# sed -E '/^$/d;s/ +, +/g,/;s/^ +//;s/ +$//;s/$//;y/ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ/йцукенгшщзхъфывапролджэячсмитьбю/' $1 > in.csv
+sed -E 's/^ +//;s/ +$//;s/$//' $1 > in.txt
+i=0
+while IFS= read -r phraseRus
+do
+    if [[ -n "$phraseRus" ]]; then
+        yandexLink="<a href=\"https://translate.yandex.com/?lang=ru-en&text=${phraseRus}\">[yandx]</a>"
+        phraseRusEdit=$(echo ${phraseRus} | sed -E 's/([[:alpha:]]+-?[[:alpha:]]*)/<a href=\"https:\/\/en.wiktionary.org\/wiki\/\1#Russian\" style=\"text-decoration:none;color:black;\">\1<\/a>/g')
+        echo "${phraseRusEdit} ${yandexLink}" >> timurTXT.txt
+    else
+        printf "\n" >> timurTXT.txt
+    fi
+done <<< $(cat in.txt)
+rm in.txt
